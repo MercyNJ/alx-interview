@@ -16,11 +16,14 @@ def minOperations(n):
     Calculates fewest number of operations.
     """
 
-    if n <= 1:
-        return 0
+    operations = 0
+    divisor = 2
 
-    num_operations = 0
-    initial_count = 1
+    while n > 1:
+        while n % divisor == 0:
+            n //= divisor
+            operations += divisor
 
+        divisor += 1
 
-
+    return operations
