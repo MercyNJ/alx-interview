@@ -17,29 +17,15 @@ def minOperations(n):
     Calculates fewest number of operations.
     """
 
-    if not isinstance(n, int):
+    if n <= 1:
         return 0
-    ops_count = 0
-    clipboard = 0
-    done = 1
-    # print('H', end='')
-    while done < n:
-        if clipboard == 0:
-            # init (the first copy all and paste)
-            clipboard = done
-            done += clipboard
-            ops_count += 2
-            # print('-(11)->{}'.format('H' * done), end='')
-        elif n - done > 0 and (n - done) % done == 0:
-            # copy all and paste
-            clipboard = done
-            done += clipboard
-            ops_count += 2
-            # print('-(11)->{}'.format('H' * done), end='')
-        elif clipboard > 0:
-            # paste
-            done += clipboard
-            ops_count += 1
-            # print('-(01)->{}'.format('H' * done), end='')
-    # print('')
-    return ops_count
+
+    res = 0
+    i = 2
+    while i <= n:
+        while n % i == 0:
+            res += i
+            n = n // i
+        i += 1
+
+    return res
