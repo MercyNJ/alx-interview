@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 A module that contains a function that solves the following:
 n a text file, there is a single character H. Your text editor
