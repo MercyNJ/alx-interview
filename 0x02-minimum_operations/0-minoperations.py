@@ -11,19 +11,21 @@ of operations needed to result in exactly n H characters in the file.
     If n is impossible to achieve, return 0
 """
 
+
 def minOperations(n):
     """
     Calculates fewest number of operations.
     """
 
-    operations = 0
-    divisor = 2
+    if n <= 1:
+        return 0
 
-    while n > 1:
-        while n % divisor == 0:
-            n //= divisor
-            operations += divisor
+    res = 0
+    i = 2
+    while i <= n:
+        while n % i == 0:
+            res += i
+            n = n // i
+        i += 1
 
-        divisor += 1
-
-    return operations
+    return res
