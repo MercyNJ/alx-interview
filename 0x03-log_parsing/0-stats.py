@@ -6,7 +6,7 @@ import sys
 
 def process_log(log_lines):
     """Process log lines, compute and print statistics."""
-    status_codes_dict = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
+    allowed_codes = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
                          '404': 0, '405': 0, '500': 0}
 
     total_size = 0
@@ -19,25 +19,25 @@ def process_log(log_lines):
             status_code = line_list[-2]
             file_size = int(line_list[-1])
 
-            if status_code in status_codes_dict:
-                status_codes_dict[status_code] += 1
+            if status_code in allowed_codes:
+                allowed_codes[status_code] += 1
 
             total_size += file_size
 
             count += 1
 
         if count == 10:
-            print_statistics(total_size, status_codes_dict)
+            print_statistics(total_size, allowed_codes)
             count = 0
 
-    print_statistics(total_size, status_codes_dict)
+    print_statistics(total_size, allowed_codes)
 
 
-def print_statistics(total_size, status_codes_dict):
+def print_statistics(total_size, allowed_codes):
     """Print total file size and number of lines for each status code."""
     print('File size: {}'.format(total_size))
 
-    for key, value in sorted(status_codes_dict.items()):
+    for key, value in sorted(allowed_codes.items()):
         if value != 0:
             print('{}: {}'.format(key, value))
 
