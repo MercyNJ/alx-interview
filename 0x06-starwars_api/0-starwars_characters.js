@@ -2,39 +2,30 @@
 
 const request = require('request');
 
-function fetchMovieCharacters(movieId) {
-  const movieUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
-
-  request(movieUrl, (error, response, body) => {
-    if (error || response.statusCode !== 200) {
-      console.error('Error fetching movie information:', error || response.statusCode);
-      return;
-    }
-
-    const movieData = JSON.parse(body);
-    const characterUrls = movieData.characters;
-
-    characterUrls.forEach((characterUrl) => {
-      fetchCharacterName(characterUrl);
-    });
-  });
-}
-
-function fetchCharacterName(characterUrl) {
-  request(characterUrl, (charError, charResponse, charBody) => {
-    if (!charError && charResponse.statusCode === 200) {
-      const characterData = JSON.parse(charBody);
-      console.log(characterData.name);
-    } else {
-      console.error('Error fetching character information:', charError || charResponse.statusCode);
-    }
-  });
-}
-
 const movieId = process.argv[2];
+const movieUrl = 'https://swapi-api.alx-tools.com/api/films/' + movieId;
 
-if (!movieId) {
-  console.error('Please provide a movie ID as a command line argument.');
-} else {
-  fetchMovieCharacters(movieId);
+function fetchMovieCharacters (characters, index) {
+  if (characters.length === index) {
+    return;
+  }
+
+  request(characters[index], (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(JSON.parse(body).name);
+      fetchMovieCharacters(characters, index + 1);
+    }
+  });
 }
+
+request(movieUrl, (error, response, body) => {
+  if (error) {
+    console.log(error);
+  } else {
+    const characters = JSON.parse(body).characters;
+
+    fetchMovieCharacters(characters, 0);
+  }
+});
