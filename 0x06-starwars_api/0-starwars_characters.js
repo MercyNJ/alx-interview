@@ -4,7 +4,7 @@ const request = require('request');
 
 const swapiBaseUrl = 'https://swapi-api.alx-tools.com/api/';
 
-function fetchMovie (movieId, callback) {
+function fetchMovie(movieId, callback) {
   const movieUrl = `${swapiBaseUrl}films/${movieId}/`;
 
   request(movieUrl, (error, response, body) => {
@@ -19,7 +19,7 @@ function fetchMovie (movieId, callback) {
   });
 }
 
-function fetchCharacter (characterUrl) {
+function fetchCharacter(characterUrl) {
   request(characterUrl, (charError, charResponse, charBody) => {
     const parsedCharBody = JSON.parse(charBody);
 
