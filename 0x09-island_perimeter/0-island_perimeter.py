@@ -21,6 +21,9 @@ def island_perimeter(grid):
     if not (1 <= len(grid) <= 100 and 1 <= len(grid[0]) <= 100):
         return
 
+    if not grid or not grid[0]:
+        return 0
+
     perimeter = 0
     rows = len(grid)
     cols = len(grid[0])
