@@ -31,6 +31,9 @@ def determine_winner(primes, n):
 
 def isWinner(x, nums):
     """Determine the winner of the game."""
+    if max(nums) > 10000 or x > 10000:
+        raise ValueError("Input values exceed maximum limit.")
+
     players_wins = {"Maria": 0, "Ben": 0}
     all_primes = precompute_primes(max(nums))
 
