@@ -3,6 +3,7 @@
 Module for Prime Game Solution.
 """
 
+
 def is_prime(num):
     """Check if a number is prime."""
     if num < 2:
@@ -12,6 +13,7 @@ def is_prime(num):
             return False
     return True
 
+
 def precompute_primes(max_num):
     """Precompute prime numbers up to max_num."""
     primes = []
@@ -20,10 +22,12 @@ def precompute_primes(max_num):
             primes.append(num)
     return primes
 
+
 def determine_winner(primes, n):
     """Determine the winner based on available prime numbers."""
     available_primes = sum(prime <= n for prime in primes)
     return "Maria" if available_primes % 2 else "Ben"
+
 
 def isWinner(x, nums):
     """Determine the winner of the game."""
