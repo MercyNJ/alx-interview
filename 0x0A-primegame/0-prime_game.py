@@ -3,7 +3,6 @@
 Module for Prime Game Solution.
 """
 
-
 def is_prime(num):
     """Check if a number is prime."""
     if num < 2:
@@ -13,41 +12,32 @@ def is_prime(num):
             return False
     return True
 
+def precompute_primes(max_num):
+    """Precompute prime numbers up to max_num."""
+    primes = []
+    for num in range(2, max_num + 1):
+        if is_prime(num):
+            primes.append(num)
+    return primes
 
-def play_round(highest_number):
-    """Simulate one round of the game."""
-    remaining_numbers = list(range(2, highest_number + 1))  # Start from 2, as 1 is not prime
-    current_player = "Maria"
-
-    while remaining_numbers:
-        prime = None
-        for num in remaining_numbers:
-            if is_prime(num):
-                prime = num
-                break
-        if prime is None:
-            break
-
-        remaining_numbers = [num for num in remaining_numbers if num % prime != 0]
-        current_player = "Ben" if current_player == "Maria" else "Maria"
-
-    return "Maria" if current_player == "Ben" else "Ben"  # Adjusted to return the last player who made a move
-
+def determine_winner(primes, n):
+    """Determine the winner based on available prime numbers."""
+    available_primes = sum(prime <= n for prime in primes)
+    return "Maria" if available_primes % 2 else "Ben"
 
 def isWinner(x, nums):
     """Determine the winner of the game."""
-    maria_wins, ben_wins = 0, 0
+    players_wins = {"Maria": 0, "Ben": 0}
+    all_primes = precompute_primes(max(nums))
 
-    for highest_number in nums:
-        winner = play_round(highest_number)
-        if winner == "Maria":
-            maria_wins += 1
-        elif winner == "Ben":
-            ben_wins += 1
+    for n in nums:
+        winner = determine_winner(all_primes, n)
+        if winner:
+            players_wins[winner] += 1
 
-    if maria_wins > ben_wins:
+    if players_wins["Maria"] > players_wins["Ben"]:
         return "Maria"
-    elif ben_wins > maria_wins:
+    elif players_wins["Ben"] > players_wins["Maria"]:
         return "Ben"
     else:
         return None
