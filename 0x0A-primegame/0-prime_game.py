@@ -16,23 +16,22 @@ def is_prime(num):
 
 def play_round(highest_number):
     """Simulate one round of the game."""
-    remaining_numbers = list(range(1, highest_number + 1))
+    remaining_numbers = list(range(2, highest_number + 1))  # Start from 2, as 1 is not prime
     current_player = "Maria"
 
-    for _ in range(len(remaining_numbers)):
-        prime_numbers = [num for num in remaining_numbers if is_prime(num)]
-        if not prime_numbers:
-            break  # Exit the loop if there are no prime numbers left
-        for prime in prime_numbers:
-            # Remove multiples of prime numbers chosen by the current player
-            remaining_numbers = \
-                    [num for num in remaining_numbers if num % prime != 0]
-            # Append the prime number itself to the list of remaining numbers
-            remaining_numbers.append(prime)
+    while remaining_numbers:
+        prime = None
+        for num in remaining_numbers:
+            if is_prime(num):
+                prime = num
+                break
+        if prime is None:
+            break
 
+        remaining_numbers = [num for num in remaining_numbers if num % prime != 0]
         current_player = "Ben" if current_player == "Maria" else "Maria"
 
-    return "Maria" if current_player == "Ben" else "Ben"
+    return "Maria" if current_player == "Ben" else "Ben"  # Adjusted to return the last player who made a move
 
 
 def isWinner(x, nums):
@@ -45,6 +44,7 @@ def isWinner(x, nums):
             maria_wins += 1
         elif winner == "Ben":
             ben_wins += 1
+
     if maria_wins > ben_wins:
         return "Maria"
     elif ben_wins > maria_wins:
