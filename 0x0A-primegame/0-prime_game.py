@@ -25,8 +25,21 @@ def precompute_primes(max_num):
 
 def determine_winner(primes, n):
     """Determine the winner based on available prime numbers."""
-    available_primes = sum(prime <= n for prime in primes)
-    return "Maria" if available_primes % 2 else "Ben"
+    '''available_primes = sum(prime <= n for prime in primes)
+    return "Maria" if available_primes % 2 else "Ben"'''
+
+
+def determine_winner(primes, n):
+    """Determine the winner based on available prime numbers."""
+    count_primes = 0
+    for prime in primes:
+        if prime <= n:
+            count_primes += 1
+
+    if count_primes % 2 == 1:
+        return "Maria"
+    else:
+        return "Ben"
 
 
 def isWinner(x, nums):
